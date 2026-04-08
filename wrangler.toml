@@ -1,0 +1,26 @@
+name = "geoforce-verification-proxy"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# ── ENVIRONMENT VARIABLES ─────────────────────────────────────────────────────
+# DO NOT put real tokens here. This file goes in GitHub.
+# Set all secrets via the Cloudflare dashboard:
+#   Workers & Pages → geoforce-proxy → Settings → Variables and Secrets
+#
+# Required variables:
+#   GEOFORCE_READINGS_TOKEN   (secret) — JWT for Readings API
+#   GEOFORCE_ASSET_KEY        (secret) — Key for Asset API auth
+#   GEOFORCE_ASSET_SECRET     (secret) — Secret for Asset API auth
+#   GEOFORCE_ENV              (text)   — "dev" or "prod"
+
+[vars]
+GEOFORCE_ENV = "dev"
+
+# ── ROUTES ────────────────────────────────────────────────────────────────────
+# Once deployed your worker will be available at:
+#   https://geoforce-proxy.<your-subdomain>.workers.dev
+#
+# All API calls from the HTML app go to:
+#   https://geoforce-proxy.<your-subdomain>.workers.dev/api/readings
+#   https://geoforce-proxy.<your-subdomain>.workers.dev/api/asset?id=UNIT-14
+#   https://geoforce-proxy.<your-subdomain>.workers.dev/api/assets
