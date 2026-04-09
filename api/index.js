@@ -20,13 +20,13 @@ const URLS = {
     readings: 'https://readings.dev.geoforce.net/readings',
     asset:    'https://asset.api.geoforce.com/api/v1',
     location: 'https://location.api.geoforce.com/api/v1',
-    auth:     'https://asset.api.geoforce.com/api/v1/auth/token',
+    auth:     'https://user-org.api.geoforce.com/api/v1/auth/token',
   },
   prod: {
     readings: 'https://readings.geoforce.com/readings',
     asset:    'https://asset.api.geoforce.com/api/v1',
     location: 'https://location.api.geoforce.com/api/v1',
-    auth:     'https://asset.api.geoforce.com/api/v1/auth/token',
+    auth:     'https://user-org.api.geoforce.com/api/v1/auth/token',
   }
 };
 
