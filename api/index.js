@@ -79,7 +79,7 @@ function err(res, message, status = 500) {
   json(res, { error: message }, status);
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // CORS preflight
   if (req.method === 'OPTIONS') {
     cors(res);
