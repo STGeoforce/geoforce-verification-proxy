@@ -224,5 +224,47 @@ module.exports = async function handler(req, res) {
     return json(res, { type: 'FeatureCollection', features });
   }
 
+  // ── DEBUG: LIST ALL ASSETS ────────────────────────────────────────────────
+  // GET /api?route=debug-assets
+  // Returns raw asset list so you can see exact field values from Geoforce
+  // Remove this endpoint before going to production
+  if (route === 'debug-assets' && req.method === 'GET') {
+    if (!env.GEOFORCE_ASSET_KEY || !env.GEOFORCE_ASSET_SECRET) return err(res, 'Asset credentials not configured', 500);
+
+    let jwt;
+    try { jwt = await getAssetJWT(env, baseUrl); }
+    catch (e) { return err(res, `Auth failed: ${e.message}`, 401); }
+
+    const body = {
+      filters: { hasAssignedDevice: true },
+      include: ['device', 'name', 'externalAssetId', 'make', 'model'],
+      page: 1,
+      perPage: 50,
+      units: 'imperial'
+    };
+
+    const resp = await fetch(`${baseUrl.asset}/assets/query`, {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${jwt}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+
+    if (!resp.ok) return err(res, `Asset API error (${resp.status}): ${await resp.text()}`, resp.status);
+    const data = await resp.json();
+
+    // Return simplified view showing just the fields we care about
+    const simplified = (data.data || []).map(a => ({
+      geoforceId:      a.id,
+      name:            a.name,
+      externalAssetId: a.externalAssetId,
+      esn:             a.device?.esn || null,
+      deviceId:        a.device?.id  || null,
+      make:            a.make,
+      model:           a.model,
+    }));
+
+    return json(res, { total: data.total, page: data.page, count: simplified.length, assets: simplified });
+  }
+
   return err(res, `Unknown route: ${req.method} ?route=${route}`, 404);
 }
