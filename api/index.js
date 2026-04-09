@@ -47,9 +47,7 @@ async function getAssetJWT(env, baseUrl) {
       method: 'POST',
       headers: {
         'Authorization': `Basic ${credentials}`,
-        'Content-Type': 'application/json',
-        'Date': new Date().toUTCString(),
-        'X-Request-Date': new Date().toISOString(),
+        'Accept': 'application/json',
       }
     }
   );
