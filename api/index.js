@@ -20,7 +20,7 @@ const URLS = {
     readings: 'https://readings.dev.geoforce.net/readings',
     asset:    'https://asset.api.geoforce.com/api/v1',
     location: 'https://location.api.geoforce.com/api/v1',
-    auth:     'https://org.api.geoforce.com/api/v1/auth/token',
+    auth:     'https://org.dev.api.geoforce.com/api/v1/auth/token',
   },
   prod: {
     readings: 'https://readings.geoforce.com/readings',
